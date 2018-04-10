@@ -52,6 +52,8 @@ disp('ode15s-built in matlab solver')
 % Adding optional parameters
 opts = odeset ('AbsTol',1e-9,'RelTol',1e-6);
 
+disp('ode15s elasped time')
+
 tic
 [t15s, y15s]=ode15s (odeFun, t1, y0, opts);
 toc
@@ -68,6 +70,9 @@ disp('ode15s with Jacobian Matrix')
 opts = odeset (opts,'Jacobian', odeJac);
 
 % Comparing ode15s with Jacobian
+
+disp('ode15s with Jacobian elasped time')
+
 tic
 [t15sJ, y15sJ] = ode15s(odeFun, t1, y0, opts);
 toc
