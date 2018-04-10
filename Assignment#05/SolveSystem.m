@@ -24,7 +24,9 @@ toc
 
 %% PLOTTING THE RESULTS
 figure (1)
-plot (t1, y1(:,2))
+plot (t1, y1(:,2),'-.k','LineWidth',1.5)
+grid on
+hold on
 
 %% CHECKING THE CONVERGENCE AND COMPARING THE RESULTS 
 
