@@ -32,6 +32,8 @@ ylabel({'Position'},'FontUnits','points','interpreter','latex','FontSize',12,'Fo
 xlabel({'Time'},'FontUnits','points','interpreter','latex','FontSize',12,'FontName','Times New Roman')
 title('Figure 1','FontUnits','points','FontWeight','normal','FontSize',12,'FontName','Times New Roman')
 
+print('D:\Courses\ComputationalMethods\Assignments\Assignment#05\Pic','-dmeta')
+
 %% CHECKING THE CONVERGENCE AND COMPARING THE RESULTS 
 
 % Computing for shorter time period
