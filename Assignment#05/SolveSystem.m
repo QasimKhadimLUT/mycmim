@@ -28,6 +28,10 @@ plot (t1, y1(:,2),'-.k','LineWidth',1.5)
 grid on
 hold on
 
+ylabel({'Position'},'FontUnits','points','interpreter','latex','FontSize',12,'FontName','Times New Roman')
+xlabel({'Time'},'FontUnits','points','interpreter','latex','FontSize',12,'FontName','Times New Roman')
+title('Figure 1','FontUnits','points','FontWeight','normal','FontSize',12,'FontName','Times New Roman')
+
 %% CHECKING THE CONVERGENCE AND COMPARING THE RESULTS 
 
 % Computing for shorter time period
