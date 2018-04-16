@@ -1,11 +1,11 @@
 function cp = modal_coordinates (t,p)
 
 
-M_dash=[1 0 0;0 1 0;0 0 1];
-K_dash= 1.0e+04 *[0.2609   -0.0000   -0.0000; -0.0000    1.3813    0.0000; 0.0000    0.0000    2.7745];
+M_p = diag([1,1,1]);
+K_p = diag([2.6e+03,1.3e+04,2.7e4]);
 
 P=[p(1);p(2);p(3)];
-eom=M_dash\(-K_dash*P); %eqqwefgbnh
+eom=M_p\(-K_p*P); %eqqwefgbnh
 
 cp(1)=  p(4);
 cp(2)=  p(5);
