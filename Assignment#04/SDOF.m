@@ -1,70 +1,118 @@
 clear all
 close all
-
-tspan=0:1e-2:5;
-
-dt=1e-5;
-tk=5;
-
-dt1=1e-4;
-tk1=5;
-
-dt2=1e-6;
-tk2=5;
-
+%%  
 m = 1;
-k =50;
-x0=[0.5 1];
-y0=[0.2 1];
-fun_g = @(t,x) x;
-fun_f = @(t,y) (-k/m)*y;
+k=1;
+h         =  1e-3;
+divFactor =  4;
+tk1       =  0:h:5;
+tk2       =  0:h/divFactor:5;
+tspan     =  5;
 
-%% SOlving the Equations
+x0=[1;0];
+x10=1;
+y10=0;
 
-[t1,x1]    = odeRK4(@(t,x) SpringMass(t,x,m,k),[dt tk],x0);
-x1= x1(1,:)';
+%% STEP     3.1: Solving the using odeFE at different time steps
 
-[t2,x2,y2] = odeSIE(fun_g, fun_f ,[dt tk] ,x0,y0);
-x2= x2(1,:)';
+% Solving the system with odeFE at h=1e-4
+tic
+[t1,x1] = odeFE(@SpringMass,[h tspan] ,x0);
+toc
 
-[t3,x3]    = odeFE(@(t,x) SpringMass(t,x,m,k),[dt tk] ,x0);
-x3= x3(1,:)';
+% Solving the system with odeFE at h/divFactor
+tic
+[t2,x2] = odeFE(@SpringMass,[h/divFactor tspan] ,x0);
+toc
 
-[t4,x4]    = odeFE(@(t,x) SpringMass(t,x,m,k),[dt1 tk1] ,x0);
-x4= x4(1,:)';
+% Solving the system with odeFE at h/(2*divFactor)
+tic
+[t3,x3] = odeFE(@SpringMass,[h/(2*divFactor) tspan] ,x0);
+toc
 
-[t5,x5]    = odeFE(@(t,x) SpringMass(t,x,m,k),[dt2 tk2] ,x0);
-x5= x5(1,:)';
+%% STEP     3.2: Total Energy of Spring Mass systtem
 
-T.E1= (1/2)*k*(x3).^2+(1/2)*m*(x3(2,:)).^2;
-T.E2= (1/2)*k*(x4).^2+(1/2)*m*(x4(2,:)).^2;
-T.E3= (1/2)*k*(x5).^2+(1/2)*m*(x4(2,:)).^2;
+E1= 0.5*m* (x1(2,:)).*x1(2,:);
+E2 = 0.5*k*(x1(1,:)).*x1(1,:);
+E3= E1+E2;
+
+E4= 0.5*m* (x2(2,:)).*x2(2,:);
+E5 = 0.5*k*(x2(1,:)).*x2(1,:);
+E6= E1+E2;
+
+E7= 0.5*m* (x3(2,:)).*x3(2,:);
+E8 = 0.5*k*(x3(1,:)).*x3(1,:);
+E9= E1+E2;
+
+% plot (t1,E1,t1,E2,t1,E3)
+
+%% STEP     4: Solving the using odeSIE at different time steps
+
+% Solving the system with odeSIE at h=1e-4
+tic
+[t4,x4] = odeSIE(@(t,x) -1*x,@(t,x) x,[h tspan] ,x10,y10);
+toc
+
+% Solving the system with odeSIE at h/divFactor
+tic
+[t5,x5] = odeSIE(@(t,x) -1*x,@(t,x) x,[h/divFactor tspan] ,x10,y10);
+toc
+
+% Solving the system with odeSIE at h/(2*divFactor)
+tic
+[t6,x6] = odeSIE(@(t,x) -1*x,@(t,x) x,[h/(2*divFactor) tspan] ,x10,y10);
+toc
+
+%% STEP     5: Solving the using odeRK4 at different time steps
+
+% Solving the system with odeRK4 at h=1e-4
+tic
+[t7,x7] = odeRK4(@SpringMass,[h tspan] ,x0);
+toc
+
+% Solving the system with odeRK4 at h/divFactor
+tic
+[t8,x8] = odeRK4(@SpringMass,[h/divFactor tspan] ,x0);
+toc
+
+% Solving the system with odeRK4 at h/(2*divFactor)
+tic
+[t9,x9] = odeRK4(@SpringMass,[h/(2*divFactor) tspan] ,x0);
+toc
+
+%% STEP     5.2: Comparing odeRK4 and odeSIE
+
+compareResults (t1,x1,t7, x7)
+compareResults (t2,x2,t8, x8)
+compareResults (t3,x3,t9, x9)
 
 %% Plotting the solution
 %%
 
 figure (1)
-plot (t2,x2);
+plot (t1,x1(1,:),'-k',t2,x2(1,:),'--k',t3,x3(1,:),':k');
 ylabel({'Position (m)'},'FontUnits','points','interpreter','latex','FontSize',12,'FontName','Times New Roman','LineWidth',2)
 xlabel({'Time (s)'},'FontUnits','points','interpreter','latex','FontSize',12,'FontName','Times New Roman','LineWidth',2)
 title('Position vs Time','FontUnits','points','FontWeight','normal','FontSize',12,'FontName','Times New Roman','LineWidth',2)
+grid on
 
-figure (2)
-plot (t1,x1,t2,x2,t3,x3);
-ylabel({'Position (m)'},'FontUnits','points','interpreter','latex','FontSize',12,'FontName','Times New Roman','LineWidth',2)
-xlabel({'Time (s)'},'FontUnits','points','interpreter','latex','FontSize',12,'FontName','Times New Roman','LineWidth',2)
-title('Position vs Time','FontUnits','points','FontWeight','normal','FontSize',12,'FontName','Times New Roman','LineWidth',2)
-
-figure (3)
-plot (t3,x3,t4,x4,t5,x5);
-ylabel({'Position (m)'},'FontUnits','points','interpreter','latex','FontSize',12,'FontName','Times New Roman','LineWidth',2)
-xlabel({'Time (s)'},'FontUnits','points','interpreter','latex','FontSize',12,'FontName','Times New Roman','LineWidth',2)
-title('Position vs Time','FontUnits','points','FontWeight','normal','FontSize',12,'FontName','Times New Roman','LineWidth',2)
-
-
-
-figure (4)
-plot(t3,T.E1,t4,T.E2,t5,T.E3)
-ylabel({'Energy (J)'},'FontUnits','points','interpreter','latex','FontSize',12,'FontName','Times New Roman','LineWidth',2)
-xlabel({'Time (s)'},'FontUnits','points','interpreter','latex','FontSize',12,'FontName','Times New Roman','LineWidth',2)
-title('Energy vs Time','FontUnits','points','FontWeight','normal','FontSize',12,'FontName','Times New Roman','LineWidth',2)
+% 
+% figure (2)
+% plot (t1,x1,t2,x2,t3,x3);
+% ylabel({'Position (m)'},'FontUnits','points','interpreter','latex','FontSize',12,'FontName','Times New Roman','LineWidth',2)
+% xlabel({'Time (s)'},'FontUnits','points','interpreter','latex','FontSize',12,'FontName','Times New Roman','LineWidth',2)
+% title('Position vs Time','FontUnits','points','FontWeight','normal','FontSize',12,'FontName','Times New Roman','LineWidth',2)
+% 
+% figure (3)
+% plot (t3,x3,t4,x4,t5,x5);
+% ylabel({'Position (m)'},'FontUnits','points','interpreter','latex','FontSize',12,'FontName','Times New Roman','LineWidth',2)
+% xlabel({'Time (s)'},'FontUnits','points','interpreter','latex','FontSize',12,'FontName','Times New Roman','LineWidth',2)
+% title('Position vs Time','FontUnits','points','FontWeight','normal','FontSize',12,'FontName','Times New Roman','LineWidth',2)
+% 
+% 
+% 
+% figure (4)
+% plot(t3,T.E1,t4,T.E2,t5,T.E3)
+% ylabel({'Energy (J)'},'FontUnits','points','interpreter','latex','FontSize',12,'FontName','Times New Roman','LineWidth',2)
+% xlabel({'Time (s)'},'FontUnits','points','interpreter','latex','FontSize',12,'FontName','Times New Roman','LineWidth',2)
+% title('Energy vs Time','FontUnits','points','FontWeight','normal','FontSize',12,'FontName','Times New Roman','LineWidth',2)
