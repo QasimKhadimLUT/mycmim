@@ -16,7 +16,6 @@ syms m1 m2 m3 k1 k2 k3 x1 x2 x3 ddx1 ddx2 ddx3
 X    = [x1  ;x2  ;x3];
 ddX  = [ddx1;ddx2;ddx3];
 M = diag([m1,m2,m3]);
-M = diag([m1,m2,m3]);
 K = [k1+k2, -k2,0;
      -k2, k2+k3,-k3;
      0, -k3,k3];

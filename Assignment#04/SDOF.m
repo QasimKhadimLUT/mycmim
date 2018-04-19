@@ -1,6 +1,14 @@
 clear all
 close all
-%%  
+%%  SPRING MASS SYSTEM
+
+
+%  The equation of motion of spring mass system is written in SpringMass
+%  function file. Now the system definition containing mass "m", stiffness 
+%  "k"  and variables explaining the time span such as h,divFactor, tk1,
+%  tk2, tspan are expressed.
+
+
 m = 1;
 k=1;
 h         =  1e-3;
@@ -9,11 +17,16 @@ tk1       =  0:h:5;
 tk2       =  0:h/divFactor:5;
 tspan     =  5;
 
+
+% Initial condoition x0 fro odeFE,ode45 and ode15s. x10 and y10 are used
+% for odeSIE.
+
 x0=[1;0];
 x10=1;
 y10=0;
 
 %% STEP     3.1: Solving the using odeFE at different time steps
+%%
 
 % Solving the system with odeFE at h=1e-4
 tic
@@ -31,6 +44,8 @@ tic
 toc
 
 %% STEP     3.2: Total Energy of Spring Mass systtem
+%% Total energy is the sum of kinetic energy (E1) and potential energy(E2).
+%  Total energy will be computed for each time step.
 
 E1= 0.5*m* (x1(2,:)).*x1(2,:);
 E2 = 0.5*k*(x1(1,:)).*x1(1,:);
@@ -44,9 +59,8 @@ E7= 0.5*m* (x3(2,:)).*x3(2,:);
 E8 = 0.5*k*(x3(1,:)).*x3(1,:);
 E9= E1+E2;
 
-% plot (t1,E1,t1,E2,t1,E3)
-
 %% STEP     4: Solving the using odeSIE at different time steps
+%%
 
 % Solving the system with odeSIE at h=1e-4
 tic
@@ -64,6 +78,7 @@ tic
 toc
 
 %% STEP     5: Solving the using odeRK4 at different time steps
+%%
 
 % Solving the system with odeRK4 at h=1e-4
 tic
@@ -81,7 +96,7 @@ tic
 toc
 
 %% STEP     5.2: Comparing odeRK4 and odeSIE
-
+%% 
 compareResults (t1,x1,t7, x7)
 compareResults (t2,x2,t8, x8)
 compareResults (t3,x3,t9, x9)
