@@ -271,10 +271,8 @@ compareResults (t7,x7,t15, x15)
 
 figure (1)
 
-plot (t1,x1(:,1),'k',t3,x3(:,1),':k',t5,x5(:,1),'--k',t7,x7(:,1),'-.k','LineWidth',1.5)
-hold on
-
-
+plot (t1,x1(:,1),'k',t3,x3(:,1),':k',t5,x5(:,1),'--k',t7,x7(:,1),'-.k','LineWidth',2)
+grid on
 ylabel({'Position (m)'},'FontUnits','points','interpreter','latex','FontSize',12,'FontName','Times New Roman','LineWidth',2)
 xlabel({'Time (s)'},'FontUnits','points','interpreter','latex','FontSize',12,'FontName','Times New Roman','LineWidth',2)
 title('System solution in normal coordinates','FontUnits','points','FontWeight','normal','FontSize',12,'FontName','Times New Roman','LineWidth',2)
@@ -282,13 +280,11 @@ title('System solution in normal coordinates','FontUnits','points','FontWeight',
 
 
 figure (2)
-plot (t9,x9(:,1),'k',t11,x11(:,1),':k',t13,x13(:,1),'--k',t15,x15(:,1),'-.k','LineWidth',1.5)
-
-
+plot (t9,x9(:,1),'k',t11,x11(:,1),':k',t13,x13(:,1),'--k',t15,x15(:,1),'-.k','LineWidth',2)
+grid on
 ylabel({'Position (m)'},'FontUnits','points','interpreter','latex','FontSize',12,'FontName','Times New Roman','LineWidth',2)
 xlabel({'Time (s)'},'FontUnits','points','interpreter','latex','FontSize',12,'FontName','Times New Roman','LineWidth',2)
 title('System solution in modal coordinates','FontUnits','points','FontWeight','normal','FontSize',12,'FontName','Times New Roman','LineWidth',2)
-
 
 
 

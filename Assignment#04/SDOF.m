@@ -90,29 +90,25 @@ compareResults (t3,x3,t9, x9)
 %%
 
 figure (1)
-plot (t1,x1(1,:),'-k',t2,x2(1,:),'--k',t3,x3(1,:),':k');
+plot (t1,x1(1,:),'--k',t1,E3,'-k', t2,x2(1,:),'-.k',t1,E6,'-k',t3,x3(1,:),':k',t1,E9,'-k','LineWidth',2);
+ylabel({'Position (m) and Energy (J)'},'FontUnits','points','interpreter','latex','FontSize',12,'FontName','Times New Roman','LineWidth',2)
+xlabel({'Time (s)'},'FontUnits','points','interpreter','latex','FontSize',12,'FontName','Times New Roman','LineWidth',2)
+title('FE Method','FontUnits','points','FontWeight','normal','FontSize',12,'FontName','Times New Roman','LineWidth',2)
+grid on
+hold on
+
+figure (2)
+plot (t4,x4,'--k',t5,x5,'-.k',t6,x6,':k','LineWidth',2);
 ylabel({'Position (m)'},'FontUnits','points','interpreter','latex','FontSize',12,'FontName','Times New Roman','LineWidth',2)
 xlabel({'Time (s)'},'FontUnits','points','interpreter','latex','FontSize',12,'FontName','Times New Roman','LineWidth',2)
-title('Position vs Time','FontUnits','points','FontWeight','normal','FontSize',12,'FontName','Times New Roman','LineWidth',2)
+title('odeSIE Method','FontUnits','points','FontWeight','normal','FontSize',12,'FontName','Times New Roman','LineWidth',2)
 grid on
+hold on
 
-% 
-% figure (2)
-% plot (t1,x1,t2,x2,t3,x3);
-% ylabel({'Position (m)'},'FontUnits','points','interpreter','latex','FontSize',12,'FontName','Times New Roman','LineWidth',2)
-% xlabel({'Time (s)'},'FontUnits','points','interpreter','latex','FontSize',12,'FontName','Times New Roman','LineWidth',2)
-% title('Position vs Time','FontUnits','points','FontWeight','normal','FontSize',12,'FontName','Times New Roman','LineWidth',2)
-% 
-% figure (3)
-% plot (t3,x3,t4,x4,t5,x5);
-% ylabel({'Position (m)'},'FontUnits','points','interpreter','latex','FontSize',12,'FontName','Times New Roman','LineWidth',2)
-% xlabel({'Time (s)'},'FontUnits','points','interpreter','latex','FontSize',12,'FontName','Times New Roman','LineWidth',2)
-% title('Position vs Time','FontUnits','points','FontWeight','normal','FontSize',12,'FontName','Times New Roman','LineWidth',2)
-% 
-% 
-% 
-% figure (4)
-% plot(t3,T.E1,t4,T.E2,t5,T.E3)
-% ylabel({'Energy (J)'},'FontUnits','points','interpreter','latex','FontSize',12,'FontName','Times New Roman','LineWidth',2)
-% xlabel({'Time (s)'},'FontUnits','points','interpreter','latex','FontSize',12,'FontName','Times New Roman','LineWidth',2)
-% title('Energy vs Time','FontUnits','points','FontWeight','normal','FontSize',12,'FontName','Times New Roman','LineWidth',2)
+figure (3)
+plot (t7,x7(1,:),'--k',t8,x8(1,:),'-.k',t9,x9(1,:),':k','LineWidth',2);
+ylabel({'Position (m)'},'FontUnits','points','interpreter','latex','FontSize',12,'FontName','Times New Roman','LineWidth',2)
+xlabel({'Time (s)'},'FontUnits','points','interpreter','latex','FontSize',12,'FontName','Times New Roman','LineWidth',2)
+title('odeRK4 Method','FontUnits','points','FontWeight','normal','FontSize',12,'FontName','Times New Roman','LineWidth',2)
+grid on
+hold off
