@@ -20,20 +20,20 @@ omega                = -1;
 %Body 1
 Type                 = 'bar';
 Length               =    L;
-GlobalPosition       =  [0,L/2,pi/2]';
+GlobalPosition       =  [0,L/2,pi/6]';
 Body1                = struct('type',Type, 'L',Length,'R', GlobalPosition);
 
 %Body 2
 Type                 = 'bar';
 Length               =    L;
-GlobalPosition       =  [L/2,L,0]';
+GlobalPosition       =  [L/2,L,pi/8]';
 Body2                = struct('type',Type, 'L',Length,'R', GlobalPosition);
 
 
 % %Body 3
 Type                 = 'bar';
 Length               =    L;
-GlobalPosition       =  [L/2,L,-pi/2]';
+GlobalPosition       =  [L/2,L,-pi/5]';
 Body3                = struct('type',Type, 'L',Length,'R', GlobalPosition);
 
 
