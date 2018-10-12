@@ -91,6 +91,38 @@ a = xlsread('Acceleration.xlsx','Acceleration','A1:C1002');
 
 %% Plotting the software results with ADAMS
 
+%Position of body 1
+figure(1)
+plot(t,q(2,:),'k',x(:,1),x(:,2),'--k','Linewidth',1.5)
+grid on
+legend('General software on MATLAB','ADAMS result')
+xlabel('Time(s)')
+ylabel('Position(m)')
+Plotting(gcf,'Times New Roman',12);
+print('Position of body 1 along x-axis','-depsc')
+
+% Velocity of body 1
+figure(2)
+plot(t,qp(1,:),'k',v(:,1),v(:,2),'--k','Linewidth',1.5)
+grid on
+legend('General software on MATLAB','ADAMS result')
+xlabel('Time(s)')
+ylabel('Velocity(m/s)')
+Plotting(gcf,'Times New Roman',12);
+print('Velocity of body 1 along x-axis','-depsc')
+
+% Acceleration of body 1
+figure(3)
+plot(t,qpp(1,:),'k',a(:,1),a(:,2),'--k','Linewidth',1.5)
+grid on
+legend('General software on MATLAB','ADAMS result')
+xlabel('Time(s)')
+ylabel('Acceleration(ms^-2)')
+Plotting(gcf,'Times New Roman',12);
+print('Acceleration of body 1 along x-axis','-depsc')
+
+
+
 
 
 
