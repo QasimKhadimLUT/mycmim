@@ -8,32 +8,32 @@ clear all
 Topology             = struct ();
 %% Defining the Time Step (h) and Simulation Time (ST)
 
-Topology.h           = 0.01;
+Topology.h           = 0.001;
 EndTime              = 1;
 Topology.ST          = 0:Topology.h:EndTime;
 %% Length of bar
 
 L                    = 1; 
-omega                = -1;
+omega                = 10;
 %% Defining the model bodies
 
 %Body 1
 Type                 = 'bar';
 Length               =    L;
-GlobalPosition       =  [0,L/2,pi/6]';
+GlobalPosition       =  [0,L/2,pi/2]';
 Body1                = struct('type',Type, 'L',Length,'R', GlobalPosition);
 
 %Body 2
 Type                 = 'bar';
 Length               =    L;
-GlobalPosition       =  [L/2,L,pi/8]';
+GlobalPosition       =  [L/2,L,0]';
 Body2                = struct('type',Type, 'L',Length,'R', GlobalPosition);
 
 
 % %Body 3
 Type                 = 'bar';
 Length               =    L;
-GlobalPosition       =  [L/2,L,-pi/5]';
+GlobalPosition       =  [L,L/2,-pi/2]';
 Body3                = struct('type',Type, 'L',Length,'R', GlobalPosition);
 
 
@@ -71,7 +71,7 @@ Topology.Joints      = [Joint1,Joint2,Joint3,Joint4];
 
 ConstraintBody = 1;
 ConstraintDOF  = 3;
-ConstraintFun  =@(t) omega*t+ pi/2;
+ConstraintFun  =@(t) cos(omega*t+ pi/2);
 ConstraintdFun = @(t) omega;
 ConstraintddFun = @(t) 0;
 TimeConstraint  = struct('body',ConstraintBody,'DOF',ConstraintDOF,'Fun', ConstraintFun,'dFun',ConstraintdFun,'ddFun',ConstraintddFun);
@@ -82,6 +82,17 @@ Topology.TimeConstraint = [TimeConstraint];
 
 %% Simulation settings
 [t, q, qp,qpp]       = KinematicAnalysis(Topology);
-% 
-% 
-% 
+
+%% Reading the ADAMS, commercial software, results for the kinematic analysis
+
+x = xlsread('Position.xlsx','Position','A1:B1002');
+v = xlsread('Velocity.xlsx','Velocity','A1:C1002');
+a = xlsread('Acceleration.xlsx','Acceleration','A1:C1002');
+
+%% Plotting the software results with ADAMS
+
+
+
+
+
+
